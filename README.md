@@ -3,6 +3,7 @@
 - [ZRE Car Config](#zre-car-config)
 - [Connecting to the Vehicle](#connecting-to-the-vehicle)
 - [Software Documentation](#software-documentation)
+  - [Data View (unimplemented)](#data-view-unimplemented)
   - [CAN View (unimplemented)](#can-view-unimplemented)
     - [Real-time Data View with DBC File (unimplemented)](#real-time-data-view-with-dbc-file-unimplemented)
     - [CANbus Configuration (unimplemented)](#canbus-configuration-unimplemented)
@@ -34,8 +35,13 @@ There will be two ways to connect Car Config to the race car:
 - Bluetooth
 
 # Software Documentation
+## Data View (unimplemented)
+![Data View Mockup](./images/Data%20View%20Mockup.png "Data View Mockup")
+
+The Data View is the default screen for the app and shows real-time CANbus data decoded with a .dbc file
 
 ## CAN View (unimplemented)
+![CAN View Mockup](./images/CAN%20View%20Mockup.png "CAN View Mockup")
 
 ### Real-time Data View with DBC File (unimplemented)
 
@@ -67,6 +73,7 @@ There will be two ways to connect Car Config to the race car:
 - CALIBRATE_BRAKE_RANGE
 
 ## BMS View (unimplemented)
+![BMS View Mockup](./images/BMS%20View%20Mockup.png "BMS View Mockup")
 
 ## Vehicle Configuration (unimplemented)
 The vehicle configuration allows a number of custom vehicle presets to be created, adjusted, and loaded on the fly. These can be presets for testing, different competition events, etc, and allow for quick loading and adjustment of a number of settings.
