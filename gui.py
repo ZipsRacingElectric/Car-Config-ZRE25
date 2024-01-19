@@ -9,6 +9,8 @@ import customtkinter
 from typing import Union
 from typing import Callable
 
+import can_view
+
 # Objects ---------------------------------------------------------------------------------------------------------------------
 
 class MenuFrame(customtkinter.CTkFrame):
@@ -18,7 +20,7 @@ class MenuFrame(customtkinter.CTkFrame):
         self.title = customtkinter.CTkLabel(self, text="Menu", fg_color="gray30", corner_radius=6)
         self.title.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="ew")
 
-        self.button = customtkinter.CTkButton(self, text="CAN View", command=self.button_callback)
+        self.button = customtkinter.CTkButton(self, text="CAN View", command=can_view.openWindow())
         self.button.grid(row=1, column=0, padx=20, pady=10)
         self.button = customtkinter.CTkButton(self, text="BMS View", command=self.button_callback)
         self.button.grid(row=2, column=0, padx=20, pady=10)
