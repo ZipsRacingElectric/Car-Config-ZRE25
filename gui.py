@@ -101,6 +101,7 @@ class RadiobuttonFrame(customtkinter.CTkScrollableFrame):
     def set(self, value):
         self.variable.set(value)
 
+# Class for the status box
 class StatusFrame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
@@ -124,6 +125,7 @@ class DefaultViewFrame(customtkinter.CTkFrame):
         self.configure(fg_color="transparent")
 
         # Frames
+        # Status box is drawn for the main page that is to point out the status of the vehicle connection
         self.status_frame = StatusFrame(self)
         self.status_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nswe")
 
