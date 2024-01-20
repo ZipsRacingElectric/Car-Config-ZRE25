@@ -143,7 +143,7 @@ class UpperFrame(customtkinter.CTkFrame):
         # Frames
         self.menu_frame = MenuFrame(self)
         self.menu_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nswe")
-
+        # Default view frame calls the boxes that hold Status and Vehical presets
         self.menu_frame = DefaultViewFrame(self)
         self.menu_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nswe")
 
