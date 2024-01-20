@@ -144,8 +144,8 @@ class UpperFrame(customtkinter.CTkFrame):
         self.menu_frame = MenuFrame(self)
         self.menu_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nswe")
         # Default view frame calls the boxes that hold Status and Vehical presets
-        self.menu_frame = DefaultViewFrame(self)
-        self.menu_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nswe")
+        self.default_view = DefaultViewFrame(self)
+        self.default_view.grid(row=0, column=1, padx=10, pady=10, sticky="nswe")
 
         
 
@@ -160,11 +160,17 @@ class App(customtkinter.CTk):
         # Frames
         self.grid_columnconfigure(0 , weight=1)
 
-        self.upper_frame = UpperFrame(self)
-        self.upper_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nswe")
+        self.frames = {}
+        for F in (UpperFrame, ButtonFrame):
+            frame = F(self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, padx=10, pady=10, sticky="nswe")
+        
+        self.show_frame(UpperFrame)
 
-        self.button_frame = ButtonFrame(self)
-        self.button_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nswe")
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
 
     def get_preset(self):
         print("preset selected:", self.checkbox_frame.get())
