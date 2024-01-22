@@ -9,21 +9,31 @@ import customtkinter
 from typing import Union
 from typing import Callable
 
+import can_view
+
 # Objects ---------------------------------------------------------------------------------------------------------------------
 
 class MenuFrame(customtkinter.CTkFrame):
-    def __init__(self, master):
-        super().__init__(master)
+    def __init__(self, master, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
 
         self.title = customtkinter.CTkLabel(self, text="Menu", fg_color="gray30", corner_radius=6)
         self.title.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="ew")
 
-        self.button = customtkinter.CTkButton(self, text="CAN View", command=self.button_callback)
+        self.button = customtkinter.CTkButton(self, text="CAN View", command=self.openCAN)
         self.button.grid(row=1, column=0, padx=20, pady=10)
         self.button = customtkinter.CTkButton(self, text="BMS View", command=self.button_callback)
         self.button.grid(row=2, column=0, padx=20, pady=10)
         self.button = customtkinter.CTkButton(self, text="Vehicle Configuration", command=self.button_callback)
         self.button.grid(row=3, column=0, padx=20, pady=10)
+
+        self.toplevel_window = None
+
+    def openCAN(self):
+        if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
+            self.toplevel_window = can_view.NewCANWindow(self)  # create window if its None or destroyed
+        else:
+            self.toplevel_window.focus()
 
     # Called when buttons tied to this function are pressed
     def button_callback(self):
@@ -91,6 +101,7 @@ class RadiobuttonFrame(customtkinter.CTkScrollableFrame):
     def set(self, value):
         self.variable.set(value)
 
+# Class for the status box
 class StatusFrame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
@@ -114,6 +125,7 @@ class DefaultViewFrame(customtkinter.CTkFrame):
         self.configure(fg_color="transparent")
 
         # Frames
+        # Status box is drawn for the main page that is to point out the status of the vehicle connection
         self.status_frame = StatusFrame(self)
         self.status_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nswe")
 
@@ -131,9 +143,9 @@ class UpperFrame(customtkinter.CTkFrame):
         # Frames
         self.menu_frame = MenuFrame(self)
         self.menu_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nswe")
-
-        self.menu_frame = DefaultViewFrame(self)
-        self.menu_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nswe")
+        # Default view frame calls the boxes that hold Status and Vehical presets
+        self.default_view = DefaultViewFrame(self)
+        self.default_view.grid(row=0, column=1, padx=10, pady=10, sticky="nswe")
 
         
 
@@ -148,11 +160,17 @@ class App(customtkinter.CTk):
         # Frames
         self.grid_columnconfigure(0 , weight=1)
 
-        self.upper_frame = UpperFrame(self)
-        self.upper_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nswe")
+        self.frames = {}
+        for F in (UpperFrame, ButtonFrame):
+            frame = F(self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, padx=10, pady=10, sticky="nswe")
+        
+        self.show_frame(UpperFrame)
 
-        self.button_frame = ButtonFrame(self)
-        self.button_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nswe")
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
 
     def get_preset(self):
         print("preset selected:", self.checkbox_frame.get())
