@@ -202,23 +202,23 @@ General Presets for interpretaation of sensor data.
 # Installation
 
 ### Dependencies
-Car-Config uses customtkinter, which needs to be installed in addition to tkinter configured python. First make sure python is installed by checking the python version: \
-```python3 -version```
+Car-Config uses customtkinter, which needs to be installed in addition to tkinter configured python.
 
-and that pip is up to date: \
-```pip3 install --upgrade pip```
+Requirements
 
-Sometimes 'packaging' isn't installed:
-```pip3 install packaging```
+Packaging\
+Tkinter\
+CustomTkinter
 
 Finally install tkinter and customtkinter:
 ```bash
+pip3 install packaging
 pip3 install python-tk
 pip3 install customtkinter
 ``` 
-If you are using WSL or a Linux distrubtions install customTkinter through your package manager: \
-Ubuntu/Debian
-```bash 
-sudo apt install customtktinter
-```
+Incase a virtual environment is needed, install python-tk through your package manager
 
+```bash
+sudo apt-get install python-tk
+pip3 install customtkinter
+```
