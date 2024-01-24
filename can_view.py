@@ -1,5 +1,5 @@
 # CAN view called from gui.py
-# Used to view the ca
+# Used to view the the CAN messages parsed using the database file "database/Main_2023.dbc"
 import customtkinter
 from typing import Union
 from typing import Callable
