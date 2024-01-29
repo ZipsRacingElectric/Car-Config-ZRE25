@@ -13,7 +13,6 @@ import os
 
 # Includes --------------------------------------------------------------------------------------------------------------------
 import config
-import gui
 import can_interface
 import gpio_interface
 import database
@@ -33,7 +32,7 @@ if(__name__ == "__main__"):
         mainDatabase = database.Setup()                            # Setup Database
         mainCan      = can_interface.Setup(mainDatabase)           # Setup CAN Interface
         mainGpio     = gpio_interface.Setup(mainDatabase, mainCan) # Setup GPIO Interface
-        mainGui      = gui.Setup(mainDatabase, mainCan)            # Setup GUI
+        #mainGui      = gui.Setup(mainDatabase, mainCan)            # Setup GUI
         
         # Begin
         logging.debug("APP - Begining...")
@@ -43,7 +42,7 @@ if(__name__ == "__main__"):
         mainDatabase["Torque_Config_Limit"] = 22
         mainDatabase["Torque_Config_Limit_Regen"] = 0
 
-        mainGui.Begin()                                            # Begin GUI
+        #mainGui.Begin()                                            # Begin GUI
 
         # GUI Begin function will not return until app is closed.
         
