@@ -8,7 +8,7 @@ from enum import Enum
 
 import config
 
-import can_interface
+import src.can_interface as can_interface
 
 # Enumerables -----------------------------------------------------------------------------------------------------------------
 class InputTypes(Enum):                              # Input Type Enumerable

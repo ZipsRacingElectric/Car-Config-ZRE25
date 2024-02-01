@@ -56,10 +56,10 @@ CAN_EMULATE                      = "EMULATER"
 CAN_LIBRARY_TYPE                 = CAN_INNOMAKER
 
 # CAN Bus ---------------------------------------------------------------------------------------------------------------------
-CAN_BITRATE                      = 1000000                     # CAN Bitrate of 1 Megabit per Second
+CAN_BITRATE                      = 1000000                     # CAN Bitrate of 1 Megabit per Second aka 1 Million Baud rate
 
-CAN_DATABASE_PATH                = "database/Main_2023.dbc"
-CAN_BMS_DATABASE_PATH            = "database/BMS_2023.dbc"
+CAN_DATABASE_PATH                = "../database/Main_2023.dbc"
+CAN_BMS_DATABASE_PATH            = "../database/BMS_2023.dbc"
 
 CAN_ID_COMMAND_DRIVE_START       = 0x004                       # ID of Command_Drive_Start
 CAN_ID_INPUT_PEDALS              = 0x005                       # ID of Input_Pedals
