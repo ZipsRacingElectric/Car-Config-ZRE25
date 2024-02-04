@@ -1,40 +1,51 @@
-var socket = null;
+let socket;
 
-document.getElementById('connectButton').onclick = function() {
-    // Connect to WebSocket server
-    socket = new WebSocket("ws://localhost:6789");
+function connectWebSocket() {
+    socket = new WebSocket('ws://localhost:6789');
 
-    socket.onopen = function(e) {
-        console.log("[open] Connection established");
-        document.getElementById('status').textContent = "Connected";
-        this.disabled = true;
-        document.getElementById('disconnectButton').disabled = false;
-    };
+    // Event listener for when the connection is established
+    socket.addEventListener('open', () => {
+        console.log('WebSocket connection established');
+    });
 
-    socket.onmessage = function(event) {
-        console.log(`[message] Data received from server: ${event.data}`);
-        var messages = document.getElementById('messages');
-        messages.innerHTML += `<div>${event.data}</div>`;
-    };
+    // Event listener for incoming messages
+    socket.addEventListener('message', (event) => {
+        console.log('Received message:', event.data);
+    });
 
-    socket.onclose = function(event) {
-        if (event.wasClean) {
-            console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-        } else {
-            console.error('[close] Connection died');
-        }
-        document.getElementById('status').textContent = "Disconnected";
-        document.getElementById('connectButton').disabled = false;
-        this.disabled = true;
-    };
+    // Event listener for when the connection is closed
+    socket.addEventListener('close', () => {
+        console.log('WebSocket connection closed');
+    });
 
-    socket.onerror = function(error) {
-        console.error(`[error] ${error.message}`);
-    };
-};
+    // Event listener for errors
+    socket.addEventListener('error', (error) => {
+        console.error('WebSocket error:', error);
+    });
+}
 
-document.getElementById('disconnectButton').onclick = function() {
+// Function to handle button click event
+function connect() {
+    connectWebSocket();
+    document.getElementById('status').innerHTML = 'Connected';
+}
+
+// Function to handle disconnect button click event
+function disconnect() {
     if (socket) {
+        socket.send('Closing WebSocket connection');
         socket.close();
+        console.log('WebSocket connection closed');
+        document.getElementById('status').innerHTML = 'Disconnected';
     }
-};
+}
+
+// Get the button elements
+const connectButton = document.getElementById('connectButton');
+
+const disconnectButton = document.getElementById('disconnectButton');
+
+// Add event listeners to the buttons
+connectButton.addEventListener('click', connect);
+
+disconnectButton.addEventListener('click', disconnect);
