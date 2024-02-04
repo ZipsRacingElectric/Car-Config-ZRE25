@@ -45,7 +45,14 @@ const connectButton = document.getElementById('connectButton');
 
 const disconnectButton = document.getElementById('disconnectButton');
 
+const CANview = document.getElementById('CAN');
+
 // Add event listeners to the buttons
 connectButton.addEventListener('click', connect);
 
 disconnectButton.addEventListener('click', disconnect);
+
+CANview.addEventListener('click', function() {
+    socket.send('CAN');
+});
+

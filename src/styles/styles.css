@@ -4,4 +4,15 @@
     padding: 10px;
     max-height: 200px;
     overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#connectButton {
+    margin-bottom: 10px;
+}
+
+#disconnectButton {
+    margin-top: 10px;
 }
