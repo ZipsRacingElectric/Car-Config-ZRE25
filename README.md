@@ -35,12 +35,12 @@ There will be two ways to connect Car Config to the race car:
 - Bluetooth
 
 # Software Documentation
-## Data View (unimplemented)
+## Data View (IN PROGRESS)
 ![Data View Mockup](./images/Data%20View%20Mockup.png "Data View Mockup")
 
 The Data View is the default screen for the app and shows real-time CANbus data decoded with a .dbc file
 
-## CAN View (unimplemented)
+## CAN View (IN PROGRESS)
 ![CAN View Mockup](./images/CAN%20View%20Mockup.png "CAN View Mockup")
 
 ### Real-time Data View with DBC File (unimplemented)
