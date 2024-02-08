@@ -52,7 +52,7 @@ connectButton.addEventListener('click', connect);
 
 disconnectButton.addEventListener('click', disconnect);
 
-CANview.addEventListener('click', function() {
-    socket.send('CAN');
+CANview.addEventListener('click', () => {
+    socket.send('CAN')
 });
 
