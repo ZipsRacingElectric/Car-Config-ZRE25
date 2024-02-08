@@ -1,4 +1,5 @@
 import can
+import CANparser
 from canmatrix import canmatrix
 
 # Load the dbc file
@@ -21,3 +22,5 @@ for msg in bus:
         # Print the parsed signals
         for signal in signals:
             print(f"Signal: {signal.name}, Value: {signal.phys}")
+
+CANparser.Setup(dbc_file)
