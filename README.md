@@ -206,19 +206,11 @@ Car-Config uses customtkinter, which needs to be installed in addition to tkinte
 
 Requirements
 
-Packaging\
-Tkinter\
-CustomTkinter
+Websockets
+CANmatrix
 
 Finally install tkinter and customtkinter:
 ```bash
-pip3 install packaging
-pip3 install python-tk
-pip3 install customtkinter
+pip3 install websockets
+pip3 install CANmatrix
 ``` 
-Incase a virtual environment is needed, install python-tk through your package manager
-
-```bash
-sudo apt-get install python-tk
-pip3 install customtkinter
-```
