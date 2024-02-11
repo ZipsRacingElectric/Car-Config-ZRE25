@@ -1,26 +1,15 @@
 import can
-import CANparser
-from canmatrix import canmatrix
+import cantools
 
-# Load the dbc file
-dbc_file = "../database/Main_2023.dbc"
-matrix = canmatrix.load(dbc_file)
+# Configure CAN interface
+can_interface = 'vcan0'
+bus = can.interface.Bus(can_interface, bustype='socketcan')
 
-# Set up the CAN bus interface
-bus = can.interface.Bus(channel='can0', bustype='socketcan')
+# Load DBC file
+dbc_path = '../database/Main_2023.dbc'
+db = cantools.database.load_file(dbc_path)
 
-# Read messages from can0
-for msg in bus:
-    # Check if the message ID is defined in the dbc file
-    if msg.arbitration_id in matrix.messages:
-        # Get the message object from the matrix
-        message = matrix.messages[msg.arbitration_id]
-
-        # Parse the message data using the dbc file
-        signals = message.decode(msg.data)
-
-        # Print the parsed signals
-        for signal in signals:
-            print(f"Signal: {signal.name}, Value: {signal.phys}")
-
-CANparser.Setup(dbc_file)
+# Read and decode CAN message
+message = bus.recv()  # Wait for a message
+decoded_message = db.decode_message(message.arbitration_id, message.data)
+print(f"Decoded message: {decoded_message}")

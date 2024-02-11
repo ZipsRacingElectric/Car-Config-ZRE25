@@ -1,4 +1,5 @@
 let socket;
+const canMessageElement = document.getElementById('messages');
 
 function connectWebSocket() {
     socket = new WebSocket('ws://localhost:6789');
@@ -11,6 +12,7 @@ function connectWebSocket() {
     // Event listener for incoming messages
     socket.addEventListener('message', (event) => {
         console.log('Received message:', event.data);
+        canMessageElement.textContent += event.data + '\n';
     });
 
     // Event listener for when the connection is closed
@@ -24,35 +26,41 @@ function connectWebSocket() {
     });
 }
 
-// Function to handle button click event
-function connect() {
+const connectButton = document.getElementById('connectButton');
+connectButton.addEventListener('click', () => {
     connectWebSocket();
     document.getElementById('status').innerHTML = 'Connected';
-}
+});
 
-// Function to handle disconnect button click event
-function disconnect() {
+const disconnectButton = document.getElementById('disconnectButton');
+disconnectButton.addEventListener('click', () => {
     if (socket) {
         socket.send('Closing WebSocket connection');
         socket.close();
-        console.log('WebSocket connection closed');
         document.getElementById('status').innerHTML = 'Disconnected';
     }
-}
-
-// Get the button elements
-const connectButton = document.getElementById('connectButton');
-
-const disconnectButton = document.getElementById('disconnectButton');
-
-const CANview = document.getElementById('CAN');
-
-// Add event listeners to the buttons
-connectButton.addEventListener('click', connect);
-
-disconnectButton.addEventListener('click', disconnect);
-
-CANview.addEventListener('click', () => {
-    socket.send('CAN')
 });
 
+const CANview = document.getElementById('CAN');
+CANview.addEventListener('click', () => {
+    socket.send('CAN');
+    openMessageWindow();
+});
+
+// Open a new window with a message input box
+function openMessageWindow() {
+    const messageWindow = window.open('', 'Message Window', 'width=400,height=200');
+    messageWindow.document.write(`
+        <h2>Message Box</h2>
+        <textarea id="messageInput" rows="4" cols="50"></textarea>
+        <br>
+        <button onclick="sendMessage()">Send Message</button>
+    `);
+    messageWindow.sendMessage = function() {
+        message = messageWindow.document.getElementById('messageInput').value;
+        socket.send(message);
+    };
+}
+
+const openWindowButton = document.getElementById('openWindowButton');
+openWindowButton.addEventListener('click', openMessageWindow);

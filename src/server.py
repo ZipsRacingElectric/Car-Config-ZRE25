@@ -1,11 +1,10 @@
 import asyncio
 import websockets
+import debug
 
 async def handle_message(message):
-    if message == "CAN":
-        print("CAN")
-        message = "CAN"
-        return message
+    message = debug.decoded_message
+    return message
 
 
 async def websocket_handler(websocket, path):
@@ -15,7 +14,8 @@ async def websocket_handler(websocket, path):
         message = await websocket.recv()
         print(f"Received message from client: {message}")
         # Call the function based on the received message
-        await handle_message(message)
+        message = await handle_message(message)
+        print(message)
         # Send a response back to the client
         response = f"Message received: {message}"
         await websocket.send(response)
