@@ -45,11 +45,10 @@ disconnectButton.addEventListener('click', disconnect);
 
 const CANview = document.getElementById('CAN');
 CANview.addEventListener('click', () => {
-    const subWindow = window.open('', 'WebSocket Messages', 'width=400,height=400');
-
+    const subWindow = window.open('', 'WebSocket Messages', 'width=900,height=900');
+    subWindow.document.write('<h1>CAN Messages</h1>');
     // Event listener for incoming messages
     socket.addEventListener('message', (event) => {
         subWindow.document.write(`<p>${event.data}</p>`);
     });
-
 });
