@@ -16,14 +16,6 @@ GUI_FRAMERATE                    = 32
 GUI_DASH_STYLE                   = "style_Dash.json"
 GUI_DEBUG_STYLE                  = "style_Debug.json"
 
-# Icons -----------------------------------------------------------------------------------------------------------------------
-ICON_SPEED                       = "icons/Speed.png"
-ICON_ENDURANCE                   = "icons/Endurance.png"
-ICON_TESTING                     = "icons/Testing.png"
-ICON_BMS                         = "icons/Bms.png"
-ICON_CALIBRATION                 = "icons/Calibration.png"
-ICON_DATABASE                    = "icons/Database.png"
-
 ICON_SCALING                     = 0.33
 
 # System ----------------------------------------------------------------------------------------------------------------------
