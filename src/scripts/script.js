@@ -24,28 +24,32 @@ function connectWebSocket() {
     });
 }
 
-const connectButton = document.getElementById('connectButton');
-connectButton.addEventListener('click', connect);
-
 const connect = () => {
     connectWebSocket();
     document.getElementById('status').innerHTML = 'Connected';
 };
-
-
-const disconnectButton = document.getElementById('disconnectButton');
-disconnectButton.addEventListener('click', disconnect);
+const connectButton = document.getElementById('connectButton');
+connectButton.addEventListener('click', connect);
 
 const disconnect = () => {
     if (socket) {
         socket.send('Closing WebSocket connection');
         socket.close();
-        console.log('WebSocket connection closed');
         document.getElementById('status').innerHTML = 'Disconnected';
     }
 };
+const disconnectButton = document.getElementById('disconnectButton');
+disconnectButton.addEventListener('click', disconnect);
+
+
 
 const CANview = document.getElementById('CAN');
 CANview.addEventListener('click', () => {
-    socket.send('CAN')
+    const subWindow = window.open('', 'WebSocket Messages', 'width=400,height=400');
+
+    // Event listener for incoming messages
+    socket.addEventListener('message', (event) => {
+        subWindow.document.write(`<p>${event.data}</p>`);
+    });
+
 });
