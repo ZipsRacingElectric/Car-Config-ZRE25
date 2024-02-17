@@ -3,7 +3,7 @@ import websockets
 import logging
 
 async def handle_message(websocket, message):
-    if message == "CAN start":
+    if message == "Meow":
         logging.info("Starting CAN")
         message = "CAN"
         await send_message(websocket, message)
@@ -11,7 +11,7 @@ async def handle_message(websocket, message):
 
 
 async def send_message(websocket, message):
-    await websocket.send(message)
+    await websocket.send("Test")
 
 async def websocket_handler(websocket, path):
     try:

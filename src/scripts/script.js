@@ -10,7 +10,7 @@ function connectWebSocket() {
 
     // Event listener for incoming messages
     socket.addEventListener('message', (event) => {
-        console.log('Received message:', event.data);
+        console.log('Message from server:', event.data);
     });
 
     // Event listener for when the connection is closed
