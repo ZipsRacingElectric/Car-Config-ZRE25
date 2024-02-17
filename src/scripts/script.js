@@ -24,35 +24,28 @@ function connectWebSocket() {
     });
 }
 
-// Function to handle button click event
-function connect() {
+const connectButton = document.getElementById('connectButton');
+connectButton.addEventListener('click', connect);
+
+const connect = () => {
     connectWebSocket();
     document.getElementById('status').innerHTML = 'Connected';
-}
+};
 
-// Function to handle disconnect button click event
-function disconnect() {
+
+const disconnectButton = document.getElementById('disconnectButton');
+disconnectButton.addEventListener('click', disconnect);
+
+const disconnect = () => {
     if (socket) {
         socket.send('Closing WebSocket connection');
         socket.close();
         console.log('WebSocket connection closed');
         document.getElementById('status').innerHTML = 'Disconnected';
     }
-}
-
-// Get the button elements
-const connectButton = document.getElementById('connectButton');
-
-const disconnectButton = document.getElementById('disconnectButton');
+};
 
 const CANview = document.getElementById('CAN');
-
-// Add event listeners to the buttons
-connectButton.addEventListener('click', connect);
-
-disconnectButton.addEventListener('click', disconnect);
-
 CANview.addEventListener('click', () => {
     socket.send('CAN')
 });
-
