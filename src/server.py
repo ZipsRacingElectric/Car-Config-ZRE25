@@ -21,7 +21,7 @@ async def websocket_handler(websocket, path):
             message = await websocket.recv()
             print(f"Received message from client: {message}")
             # Call the function based on the received message
-            await handle_message(message)
+            await handle_message(websocket, message)
             # Send a response back to the client
             response = f"Message received: {message}"
             await websocket.send(response)

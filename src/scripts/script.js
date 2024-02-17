@@ -41,7 +41,13 @@ const disconnect = () => {
 const disconnectButton = document.getElementById('disconnectButton');
 disconnectButton.addEventListener('click', disconnect);
 
-
+const send = document.getElementById('send');
+send.addEventListener('click', () => {
+    const message = "Meow";
+    if (socket) {
+        socket.send(message);
+    }
+});
 
 const CANview = document.getElementById('CAN');
 CANview.addEventListener('click', () => {
