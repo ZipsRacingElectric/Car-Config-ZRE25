@@ -14,6 +14,7 @@ async def handle_message(websocket, message):
         await send_message(websocket)
 
 # TODO: JSON dump the message as float instead of int
+db = cantools.database.load_file('../database/Main_2023.dbc')
 async def send_message(websocket):
     bus = can.interface.Bus(channel='vcan0', bustype='socketcan')
     try:
@@ -21,8 +22,11 @@ async def send_message(websocket):
             message = bus.recv()
             print(f"ID: {message.arbitration_id}, Data: {message.data}")
             
-            # Convert the data to a dictionary
-            data_dict = {"ID": message.arbitration_id, "Data": [float(i) for i in message.data]}
+            # Find the CAN message in the DBC file
+            can_message = db.get_message_by_frame_id(message.arbitration_id)
+            
+            # Decode the CAN message
+            data_dict = can_message.decode(message.data)
             
             # Convert the dictionary to a JSON string
             message2 = json.dumps(data_dict)

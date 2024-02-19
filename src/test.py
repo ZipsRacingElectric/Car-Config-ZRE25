@@ -13,7 +13,7 @@ message = db.get_message_by_name(message_name)
 data = {}
 for signal in message.signals:
     # Generate a random value within the signal's range
-    random_value = random.uniform(signal.minimum, signal.maximum)
+    random_value = random.randrange(signal.minimum, signal.maximum)
     data[signal.name] = random_value
 
 # Encode the data into a CAN frame
