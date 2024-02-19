@@ -1,17 +1,18 @@
 import asyncio
 import websockets
 import logging
+import can
+import cantools
 
 async def handle_message(websocket, message):
     if message == "Meow":
         logging.info("Starting CAN")
         message = "CAN"
+        message = reader(message)
         await send_message(websocket, message)
-        return message
-
 
 async def send_message(websocket, message):
-    await websocket.send("Test")
+    await websocket.send(message)
 
 async def websocket_handler(websocket, path):
     try:
@@ -28,12 +29,25 @@ async def websocket_handler(websocket, path):
     except websockets.exceptions.ConnectionClosedOK:
         logging.error("Connection closed")
         return
+    
+def reader(message):
+    can_bus = can.interface.Bus(channel='vcan0', bustype='socketcan')
+    db = cantools.database.load_file('../database/Main_2023.dbc')
+    while True: 
+        message = can_bus.recv(timeout=1.0)
+        if message is not None:
+            message = db.decode_message(message.arbitration_id, message.data)
+            print(message)
+            return message
+
 # Start the server
 def main():
     start_server = websockets.serve(websocket_handler, "localhost", 6789)
 
     asyncio.get_event_loop().run_until_complete(start_server)
     asyncio.get_event_loop().run_forever()
+
+
 
 if __name__ == "__main__":
     main()
