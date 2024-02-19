@@ -11,17 +11,29 @@ async def handle_message(websocket, message):
     if message == "Meow":
         logging.info("Starting CAN")
         message = "CAN"
-        message = reader(message)
-        await send_message(websocket, message)
+        await send_message(websocket)
 
 # TODO: JSON dump the message as float instead of int
-async def send_message(websocket, message):
-    if isinstance(message, dict):
-        for key in message:
-            if isinstance(message[key], int):  # check if value is an integer
-                message[key] = float(message[key])  # convert int to float
-        message = json.dumps(message)
-    await websocket.send(message)
+async def send_message(websocket):
+    bus = can.interface.Bus(channel='vcan0', bustype='socketcan')
+    try:
+        while True:
+            message = bus.recv()
+            print(f"ID: {message.arbitration_id}, Data: {message.data}")
+            
+            # Convert the data to a dictionary
+            data_dict = {"ID": message.arbitration_id, "Data": [float(i) for i in message.data]}
+            
+            # Convert the dictionary to a JSON string
+            message2 = json.dumps(data_dict)
+            
+            # Send the message over the WebSocket
+            await websocket.send(message2)
+            
+            # Add a small delay to allow other tasks to run
+            await asyncio.sleep(0.01)
+    finally:
+        bus.shutdown()
 
 async def websocket_handler(websocket, path):
     try:
@@ -39,15 +51,6 @@ async def websocket_handler(websocket, path):
         logging.error("Connection closed")
         return
     
-def reader(message):
-    can_bus = can.interface.Bus(channel='vcan0', bustype='socketcan')
-    db = cantools.database.load_file('../database/Main_2023.dbc')
-    while True: 
-        message = can_bus.recv(timeout=1.0)
-        if message is not None:
-            message = db.decode_message(message.arbitration_id, message.data)
-            print(message)
-            return message
 
 # Start the server
 def main():
