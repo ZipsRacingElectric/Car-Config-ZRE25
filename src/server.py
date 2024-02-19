@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
+
 import asyncio
 import websockets
 import logging
 import can
 import cantools
+import json
 
 async def handle_message(websocket, message):
     if message == "Meow":
@@ -11,7 +14,13 @@ async def handle_message(websocket, message):
         message = reader(message)
         await send_message(websocket, message)
 
+# TODO: JSON dump the message as float instead of int
 async def send_message(websocket, message):
+    if isinstance(message, dict):
+        for key in message:
+            if isinstance(message[key], int):  # check if value is an integer
+                message[key] = float(message[key])  # convert int to float
+        message = json.dumps(message)
     await websocket.send(message)
 
 async def websocket_handler(websocket, path):

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import cantools
 import random
 import can
@@ -20,10 +21,12 @@ encoded_message = message.encode(data)
 
 # Setup CAN interface (e.g., socketcan)
 can_interface = 'vcan0'  # Replace with your actual interface name
-bus = can.interface.Bus(can_interface, bustype='socketcan')
+with can.interface.Bus(can_interface, bustype='socketcan') as bus:
+    # Send the message
+    #bus.send(encoded_message)
+    bus.send(can.Message(arbitration_id=message.frame_id, data=encoded_message, is_extended_id=False))
 
-# Send the message
-msg = can.Message(arbitration_id=message.frame_id, data=encoded_message, is_extended_id=False)
-bus.send(msg)
+    # Print a confirmation message
+    print(f'Sent message {message_name} with random data: {data}')
 
-print(f'Sent message {message_name} with random data: {data}')
+
